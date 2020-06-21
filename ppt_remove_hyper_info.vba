@@ -1,5 +1,7 @@
  '此代码功能，批量为选择的PowerPoint文件进行 删除超链接作者等内容的操作，快捷键 ALT-F11 进入VBA
+  '增加功能，批量删除 备注文字
  'Author: csoftcn
+ 'Update:  June, 2020
  'Time: May, 2020
  '*****************
 Sub remove_ppt_hyper_info()
@@ -33,6 +35,11 @@ Sub remove_ppt_hyper_info()
                     .Item("Category").Value = ""
                     .Item("Last save time").Value = ""
                 End With
+
+                For Each sld In oPpt.Slides '删除所有备注
+                    sld.NotesPage.Shapes.Placeholders(2).TextFrame.TextRange = ""
+                Next sld
+
 
                 oPpt.Save
                 oPpt.Close
